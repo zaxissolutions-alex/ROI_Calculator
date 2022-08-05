@@ -1,0 +1,217 @@
+
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<style>
+    .container
+    {
+        width: 100%;
+        height: 100%;
+        font-family: 'Poppins';
+        font-size: large;
+    }
+    .div1{
+        margin-top: 5%;
+        margin-left: 40%;
+    }
+</style>
+<div class="container">
+    <div class="div1">
+        <label for="yname">Your Name:</label><br>
+        <input type="text" id="yname" name="yname" ><br>
+
+        <label for="bname">Business Name:</label><br>
+        <input type="text" id="bname" name="bname" ><br>
+
+        <label for="price">Your product or service sales price:</label><br>
+        <input type="number" id="price" name="price" >$<br><br>
+
+        <label for="industry">Please select your industry:</label><br>
+        <select name="industry" id="industry">
+            <option value="Consumer Products">Consumer Products</option>
+            <option value="Business Services">Business Services</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Manufacturing">Manufacturing</option>
+            <option value="Travel & Tourism">Travel & Tourism</option>
+            <option value="Education">Education</option>
+            <option value="Retail">Retail</option>
+            <option value="Telecom">Telecom</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Finance">Finance</option>
+            <option value="Media & Publishing">Media & Publishing</option>
+            <option value="Non-Profit">Non-Profit</option>
+            <option value="Technology">Technology</option>
+            <option value="Solar">Solar</option>
+            <option value="Real Estate">Real Estate</option>
+            <!--More options here-->
+
+        </select>
+        <br><br>
+        <label for="ad">Your daily ad spend:</label><br>
+        <input type="number" min="0" max="1000" step="50" id="ad" name="ad" >$<br><br>
+
+        <label for="email">Your Email:</label><br>
+        <input type="email" id="email">
+
+        <button style="background-color:#30455C; color: white; text-align:center;height: 60px;width: 100px;" ><b>Submit</b></button>
+    </div>
+
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" type="text/javascript" language="javascript"></script>
+<script>
+    
+    $(document).ready(function(){
+        $("button").click(function(){
+            // Check the input fields
+            var emailAddr = $("#email").val();
+            var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if($("#yname").val()==""){
+                alert("Please input your name");
+                return false;
+            }
+            else if($("#bname").val()==""){
+                alert("Please input your business name");
+                return false;
+            }
+            else if($("#price").val()==""){
+                alert("Please input the price");
+                return false;
+            }
+            else if($("#ad").val()==""){
+                alert("Please input your daily ad spend");
+                return false;
+            }
+            else if(emailAddr==""||! emailAddr.match(mailformat)){
+                alert("Please input an correct email address so that you can receive the ROI Estimator Results!");
+                return false;
+            }
+            
+            if($("#ad").val()>1000||$("#ad").val()<0){
+                alert("The daily ad spend shoud be 0~1000$");
+                return false;
+            }
+            //Average Cost Per Lead By Industry
+            //Naming format: var CPL_IndustryName = 100; 
+            var CPL_ConsumerProducts = 105;
+            var CPL_BusinessServices = 132;
+            var CPL_Healthcare = 162;
+            var CPL_Manufacturing = 136;
+            var CPL_TravelAndTourism = 106;
+            var CPL_Retail = 34;
+            var CPL_Education = 55;
+            var CPL_Telecom = 45;
+            var CPL_Marketing = 99;
+            var CPL_Finance = 160;
+            var CPL_MediaAndPublishing = 108;
+            var CPL_NonProfit = 31;
+            var CPL_Technology = 208;
+            var CPL_Solar = 150;
+            var CPL_RealEstate = 75;
+            //More to follow
+
+            /*
+                Attention! Be careful when adding new CPLs, the name of those new CPLs must meet the following requirements:
+                1.The name cannot contain spaces or tabs.(For example: "CPL_Consumer Products" is a wrong one)
+                2.Do not use special symbols like ! @ ; : , . " ' + - * / =
+                3.Advise to use English letters(a~Z), numbers(0~9) and underscore(_) or combinations of them.
+            */
+           var dailyAdSpend = $("#ad").val();
+           console.log("Daily Ad Spend: "+dailyAdSpend);
+           var CPL;
+           var SelectedIndustry = $("#industry").val();
+           console.log("Industry you selected: "+SelectedIndustry);
+           //To check which industry the customer selected:
+           if(SelectedIndustry == "Consumer Products")
+           {               
+                CPL = CPL_ConsumerProducts;
+           }                           
+           else if(SelectedIndustry == "Business Services")
+           {
+                CPL = CPL_BusinessServices;
+           }
+           else if(SelectedIndustry == "Healthcare")
+           {
+                CPL = CPL_Healthcare;
+           }
+           else if(SelectedIndustry == "Manufacturing")
+           {
+                CPL = CPL_Manufacturing;
+           }
+           else if(SelectedIndustry == "Travel & Tourism")
+           {
+                CPL = CPL_TravelAndTourism;
+           }
+           else if(SelectedIndustry == "Education")
+           {
+                CPL = CPL_Education;
+           }
+           else if(SelectedIndustry == "Retail")
+           {
+                CPL = CPL_Retail;
+           }
+           else if(SelectedIndustry == "Telecom")
+           {
+                CPL = CPL_Telecom;
+           }
+           else if(SelectedIndustry == "Marketing")
+           {
+                CPL = CPL_Marketing;
+           }
+           else if(SelectedIndustry == "Finance")
+           {
+                CPL = CPL_Finance;
+           }
+           else if(SelectedIndustry == "Media & Publishing")
+           {
+                CPL = CPL_MediaAndPublishing;
+           }
+           else if(SelectedIndustry == "Non-Profit")
+           {
+                CPL = CPL_NonProfit;
+           }
+           else if(SelectedIndustry == "Technology")
+           {
+                CPL = CPL_Technology;
+           }
+           else if(SelectedIndustry == "Solar")
+           {
+                CPL = CPL_Solar;
+           }
+           //To add more industries:
+           //1.copy this else if{} block below & paste them in a new line.
+           //2.copy the name of the industry from the "option" block above, then repalce what's within the quotation mark
+           else if(SelectedIndustry == "Real Estate")
+           {    
+                //3.copy paste CPLs from the "var CPL_XXX " block above 
+                CPL = CPL_RealEstate;
+           }
+
+
+
+
+
+
+
+
+           console.log("CPL: "+CPL);
+
+           var Lead_Per_Month = dailyAdSpend *30.33/CPL;
+           //Change close rate percentages here:
+           var Close_Rate_Percentage = 0.15;
+
+           var closeRate = Lead_Per_Month * Close_Rate_Percentage;
+
+           var salesPrice = $("#price").val();
+
+           var Monthly_Gross_Revenue = closeRate * salesPrice;
+           var Quarterly_Gross_Revenue = Monthly_Gross_Revenue * 3;
+           var Yearly_Gross_Revenue = Quarterly_Gross_Revenue * 4;
+
+           alert("ROI estimator has been emailed to your mailbox!\n Leads Per Month: "+ Math.round(Lead_Per_Month*100)/100+"\n"+"Close Rate: "+Math.round(closeRate*10)/10 +"\n"+"Monthly Gross Revenue: "+Math.round(Monthly_Gross_Revenue)+"\n"+"Quarterly Gross Revenue: "+Math.round(Quarterly_Gross_Revenue)+"\n"+"Yearly Gross Revenue: "+Math.round(Yearly_Gross_Revenue)+"\n");
+        });
+    });
+   
+      
+</script>
+
+
+
+  
